@@ -18,18 +18,24 @@
       box-sizing: border-box;
     }
 
+    html {
+      min-height: 100%;
+    }
+
     body {
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       font-family: 'Poppins', sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       background:
         radial-gradient(circle at top left, #ffe4ef 0%, transparent 30%),
         radial-gradient(circle at bottom right, #f7d9ff 0%, transparent 30%),
         linear-gradient(135deg, #fff7f8, #fff1f7, #fef6ff);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       position: relative;
+      padding: 24px 0;
     }
 
     .floating {
@@ -62,11 +68,21 @@
     }
 
     .container {
+      position: relative;
       text-align: center;
       padding: 24px;
       z-index: 2;
       width: 100%;
       max-width: 700px;
+      margin: 0 auto;
+    }
+
+    #giftSection {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .intro {
@@ -166,14 +182,14 @@
       visibility: hidden;
       transform: translateY(20px);
       transition: all 1s ease;
-      position: absolute;
-      inset: 0;
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 40px 28px;
       text-align: center;
+      margin-top: 12px;
     }
 
     .message-screen.show {
@@ -184,10 +200,11 @@
 
     .birthday-title {
       font-family: 'Pacifico', cursive;
-      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-size: clamp(2rem, 5vw, 3rem);
       color: #ff7ca8;
       margin-bottom: 20px;
       text-shadow: 0 8px 20px rgba(255, 140, 180, 0.25);
+      white-space: nowrap;
     }
 
     .heart {
