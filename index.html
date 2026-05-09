@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Elia! ❤️</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background:
+        radial-gradient(circle at top left, #ffe4ef 0%, transparent 30%),
+        radial-gradient(circle at bottom right, #f7d9ff 0%, transparent 30%),
+        linear-gradient(135deg, #fff7f8, #fff1f7, #fef6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .floating {
+      position: absolute;
+      opacity: 0.15;
+      animation: float 12s infinite ease-in-out;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .flower {
+      font-size: 3rem;
+    }
+
+    .bear {
+      font-size: 4rem;
+    }
+
+    .f1 { top: 10%; left: 8%; animation-delay: 0s; }
+    .f2 { top: 18%; right: 10%; animation-delay: 3s; }
+    .f3 { bottom: 10%; left: 12%; animation-delay: 6s; }
+    .f4 { bottom: 15%; right: 8%; animation-delay: 9s; }
+    .f5 { top: 50%; left: 3%; animation-delay: 2s; }
+    .f6 { top: 55%; right: 5%; animation-delay: 5s; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(6deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    .container {
+      text-align: center;
+      padding: 24px;
+      z-index: 2;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .intro {
+      color: #b96f93;
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .gift-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+
+    .gift {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: idleBounce 2.5s infinite ease-in-out;
+    }
+
+    @keyframes idleBounce {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .box {
+      position: absolute;
+      bottom: 0;
+      width: 180px;
+      height: 140px;
+      background: linear-gradient(145deg, #ffbdd2, #ff95b8);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(255, 155, 188, 0.35);
+    }
+
+    .lid {
+      position: absolute;
+      top: 18px;
+      left: -10px;
+      width: 200px;
+      height: 40px;
+      background: linear-gradient(145deg, #ff9fc2, #ff7daa);
+      border-radius: 16px;
+      transition: transform 1s ease;
+      transform-origin: left center;
+      z-index: 5;
+      box-shadow: 0 10px 20px rgba(255, 120, 170, 0.3);
+    }
+
+    .ribbon-v {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 140px;
+      background: #fff1b8;
+      z-index: 2;
+      border-radius: 8px;
+    }
+
+    .ribbon-h {
+      position: absolute;
+      top: 50px;
+      width: 180px;
+      height: 28px;
+      background: #fff1b8;
+      z-index: 2;
+      border-radius: 8px;
+    }
+
+    .bow {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      z-index: 10;
+    }
+
+    .click-text {
+      margin-top: 30px;
+      color: #b96f93;
+      font-size: 1rem;
+      min-height: 28px;
+      transition: all 0.3s ease;
+    }
+
+    .message-screen {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 1s ease;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 28px;
+      text-align: center;
+    }
+
+    .message-screen.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0px);
+    }
+
+    .birthday-title {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      color: #ff7ca8;
+      margin-bottom: 20px;
+      text-shadow: 0 8px 20px rgba(255, 140, 180, 0.25);
+    }
+
+    .heart {
+      animation: pulse 1.5s infinite;
+      display: inline-block;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .message-card {
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 30px;
+      border-radius: 28px;
+      max-width: 650px;
+      box-shadow: 0 15px 40px rgba(255, 170, 200, 0.25);
+    }
+
+    .message {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.9;
+      color: #7d5c6c;
+      text-align: left;
+    }
+
+    .signature {
+      margin-top: 20px;
+      color: #ff7ca8;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: right;
+    }
+
+    .teddy-large {
+      font-size: 4rem;
+      margin-bottom: 18px;
+    }
+
+    .petals {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .petal {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: fall linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-120px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(120vh) rotate(360deg);
+      }
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: #c28ca5;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .gift {
+        width: 140px;
+        height: 140px;
+      }
+
+      .box {
+        width: 140px;
+        height: 110px;
+      }
+
+      .lid {
+        width: 160px;
+        left: -10px;
+      }
+
+      .ribbon-h {
+        width: 140px;
+      }
+
+      .message-card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="floating flower f1">🌸</div>
+  <div class="floating flower f2">🌷</div>
+  <div class="floating flower f3">🌸</div>
+  <div class="floating flower f4">🌷</div>
+  <div class="floating bear f5">🧸</div>
+  <div class="floating bear f6">🧸</div>
+
+  <div class="petals" id="petals"></div>
+
+  <div class="container">
+
+    <div id="giftSection">
+      <div class="intro">good morning my angel! i made you a little birthday surprise 🎀</div>
+
+      <div class="gift-wrapper">
+        <div class="gift" id="gift">
+          <div class="lid" id="lid"></div>
+          <div class="bow">🎀</div>
+          <div class="box"></div>
+          <div class="ribbon-v"></div>
+          <div class="ribbon-h"></div>
+        </div>
+
+        <div class="click-text" id="clickText">
+          Click the gift 10 times 💕
+        </div>
+      </div>
+    </div>
+
+    <div class="message-screen" id="messageScreen">
+      <div class="teddy-large">🧸🌸</div>
+
+      <div class="birthday-title">
+        Happy Birthday Elia<span class="heart">❤️</span>
+      </div>
+
+      <div class="message-card">
+        <div class="message">
+          dear elia~
+
+          <br><br>happy 20th birthday to the most beautiful girl i have ever met, 김하림!
+
+          jason may not be the best with cards or crafts but he can code a bit. he is a cs major after all! so he got this idea to make a little something for elia. i really really hope this works otherwise this will be a massive airball 😭
+
+          <br><br>thank you for making my life brighter and more filled with laughter. from slushy stains to interesting 4th of july attire to that weird tongue face you make i am so grateful that God put you in my life. i cant wait to continue growing alongside with you!
+
+          i hope that you can make so many precious memories this next year and im eager see all the wonderful things you will accomplish this year.
+
+          <br><br>you deserve the world elia ❤️
+
+        </div>
+
+        <div class="signature">
+          love,<br>jason 🐻
+        </div>
+      </div>
+
+      <div class="footer-note">
+        1 Corinthians 13:4-7
+      </div>
+    </div>
+  </div>
+
+  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=sweet-piano-11254.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const gift = document.getElementById('gift');
+    const clickText = document.getElementById('clickText');
+    const messageScreen = document.getElementById('messageScreen');
+    const giftSection = document.getElementById('giftSection');
+    const lid = document.getElementById('lid');
+    const music = document.getElementById('music');
+
+    let clicks = 0;
+
+    const messages = [
+      'keep going elia! 🌸',
+      'something cute is inside 🧸',
+      'almost there 💕',
+      '加油! 加油 ✨',
+      'just a few more clicks 🎀',
+      'miffy is rooting for you! 🐇',
+      'okay this gift is getting a little big... 😭',
+      'ALMOST THEREE 🌷',
+      'one last click!!! ❤️'
+    ];
+
+    gift.addEventListener('click', () => {
+      clicks++;
+
+      if (clicks === 1) {
+        music.play().catch(() => {});
+      }
+
+      const scale = 1 + clicks * 0.08;
+      gift.style.transform = `scale(${scale}) rotate(${clicks % 2 === 0 ? 2 : -2}deg)`;
+
+      gift.animate([
+        { transform: `scale(${scale}) translateX(0px)` },
+        { transform: `scale(${scale}) translateX(-6px)` },
+        { transform: `scale(${scale}) translateX(6px)` },
+        { transform: `scale(${scale}) translateX(0px)` }
+      ], {
+        duration: 250
+      });
+
+      if (clicks < 10) {
+        clickText.textContent = messages[Math.min(clicks - 1, messages.length - 1)];
+      }
+
+      if (clicks >= 10) {
+        openGift();
+      }
+    });
+
+    function openGift() {
+      lid.style.transform = 'rotate(-45deg) translate(-60px, -40px)';
+
+      launchConfetti();
+
+      setTimeout(() => {
+        giftSection.style.display = 'none';
+        messageScreen.classList.add('show');
+      }, 1200);
+    }
+
+    function launchConfetti() {
+      const duration = 3500;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 70,
+          origin: { x: 0 }
+        });
+
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 70,
+          origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    const petalsContainer = document.getElementById('petals');
+
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.innerHTML = Math.random() > 0.5 ? '🌸' : '💗';
+
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (Math.random() * 5 + 6) + 's';
+      petal.style.opacity = Math.random();
+      petal.style.fontSize = (Math.random() * 18 + 14) + 'px';
+
+      petalsContainer.appendChild(petal);
+
+      setTimeout(() => {
+        petal.remove();
+      }, 12000);
+    }
+
+    setInterval(createPetal, 500);
+  </script>
+</body>
+</html>
