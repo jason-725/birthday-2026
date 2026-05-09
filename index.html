@@ -367,8 +367,20 @@
     </div>
   </div>
 
-  <audio id="music" loop>
+  <audio id="clickSound">
+    <source src="assets/mouseClick.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="confettiSound">
+    <source src="assets/confettiCelebrate.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="backgroundMusic" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=sweet-piano-11254.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="celebrationMusic" loop>
+    <source src="assets/youngAndBeautiful.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -377,7 +389,10 @@
     const messageScreen = document.getElementById('messageScreen');
     const giftSection = document.getElementById('giftSection');
     const lid = document.getElementById('lid');
-    const music = document.getElementById('music');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const celebrationMusic = document.getElementById('celebrationMusic');
+    const clickSound = document.getElementById('clickSound');
+    const confettiSound = document.getElementById('confettiSound');
 
     let clicks = 0;
 
@@ -397,8 +412,11 @@
       clicks++;
 
       if (clicks === 1) {
-        music.play().catch(() => {});
+        backgroundMusic.play().catch(() => {});
       }
+
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
 
       const scale = 1 + clicks * 0.08;
       gift.style.transform = `scale(${scale}) rotate(${clicks % 2 === 0 ? 2 : -2}deg)`;
@@ -424,9 +442,13 @@
     function openGift() {
       lid.style.transform = 'rotate(-45deg) translate(-60px, -40px)';
 
+      confettiSound.play().catch(() => {});
+
       launchConfetti();
 
       setTimeout(() => {
+        backgroundMusic.pause();
+        celebrationMusic.play().catch(() => {});
         giftSection.style.display = 'none';
         messageScreen.classList.add('show');
       }, 1200);
